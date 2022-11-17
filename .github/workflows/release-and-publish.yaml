@@ -23,8 +23,13 @@ jobs:
         run: |
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - run: yarn
-      - run: yarn build
+
+      - name: Install yarn dependencies
+        run: yarn
+
+      - name: Build dist
+        run: yarn build
+
       # Bump package version
       # Use tag latest
       - name: Bump release version
@@ -34,6 +39,7 @@ jobs:
           echo "RELEASE_TAG=latest" >> $GITHUB_ENV
         env:
           RELEASE_TYPE: ${{ github.event.inputs.release-type }}
+
       # Bump package pre-release version
       # Use tag beta for pre-release versions
       - name: Bump pre-release version
@@ -62,7 +68,7 @@ jobs:
 
       # Publish version to public repository
       - name: Publish
-        run: yarn npm publish --access public --tag ${{ env.RELEASE_TAG }}
+        run: npm publish --access public --tag ${{ env.RELEASE_TAG }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
 
