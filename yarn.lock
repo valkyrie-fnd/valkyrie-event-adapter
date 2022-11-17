@@ -5,9 +5,9 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@valkyrie-fnd/valkyrie-js-event-adapter@workspace:.":
+"@valkyrie-fnd/valkyrie-event-adapter@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@valkyrie-fnd/valkyrie-js-event-adapter@workspace:."
+  resolution: "@valkyrie-fnd/valkyrie-event-adapter@workspace:."
   dependencies:
     typescript: ^4.9.3
   languageName: unknown

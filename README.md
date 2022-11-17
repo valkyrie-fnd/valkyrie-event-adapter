@@ -36,19 +36,6 @@ TBW
 ## Events
 TBW
 
-### Publishing
+## Publishing
 
-Increment the package version (major | minor | patch | ... | prerelease), 
-for more info, see `yarn help version`
-This will tag and commit the incremented version in git.
-
-```shell
-yarn version --prerelease
-```
-
-Publish the package to npm repository. This requires that you've logged in using `yarn login` and that your npm user has access 
-to the valkyrie-fnd organization.
-
-```shell
-yarn publish
-```
+Update [CHANGELOG](./CHANGELOG.md) and then use Release workflow to release and publish a new version
