@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       release-type:
+        type: choice
         description: |
-          Release type (one of): patch, minor, major, prepatch, preminor, premajor, prerelease.  
+          Release type
           Use prepatch, preminor, premajor for the first "pre", to increment pre value use prerelease.
         options:
           - prerelease
