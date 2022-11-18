@@ -7,6 +7,14 @@ on:
         description: |
           Release type (one of): patch, minor, major, prepatch, preminor, premajor, prerelease.  
           Use prepatch, preminor, premajor for the first "pre", to increment pre value use prerelease.
+        options:
+          - prerelease
+          - patch
+          - minor
+          - major
+          - prepatch
+          - preminor
+          - premajor
         required: true
 jobs:
   build:
