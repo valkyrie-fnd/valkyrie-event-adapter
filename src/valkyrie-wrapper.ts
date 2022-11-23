@@ -8,7 +8,7 @@
 /**
  * Create an instance of ValkyrieWrapper and pass it the parent/wrapper window as well as an implementation of `ValkyrieReceiver`
  * 
- * ```
+ * ``` typescript
  * const vw = new ValkyrieWrapper(window.parent, window, receiverImpl);
  * // Call init to register all listeners
  * const removeListeners = vm.init();
@@ -38,7 +38,7 @@ export class ValkyrieWrapper {
   }
   /**
    * call init after creating an instance, to set up listeners.
-   * ```
+   * ``` typescript
    * const vm = new ValkyrieWrapper(window.parent, window, receiverImpl);
    * const removeListeners = vm.init();
    * //....
@@ -50,9 +50,18 @@ export class ValkyrieWrapper {
   init(): () => void {
     const listener = (e: Event) => {
       const m = e as MessageEvent;
-      if (m?.data?.type === "VALKYRIE_AUTOPLAY") {
-        const ap = m.data as Autoplay;
-        this.receiver.autoPlay(ap.action);
+      switch (m?.data?.type) {
+        case "VALKYRIE_AUTOPLAY":
+          const ap = m.data as Autoplay;
+          this.receiver.autoPlay?.(ap.action);
+          break;
+        case "VALKYRIE_VOLUME":
+          const muted: boolean = m.data.muted;
+          this.receiver.volume?.(muted);
+          break;
+        case "VALKYRIE_REFRESH_BALANCE":
+          this.receiver.refreshBalance?.()
+          break;
       }
     }
     if (this.receiver) {
@@ -82,6 +91,26 @@ export class ValkyrieWrapper {
   gameIdle() {
     this.parent.postMessage({ type: "VALKYRIE_IDLE" }, '*');
   }
+  /**
+   * Call when game starts with player participation. 
+   * Wrapper will avoid displaying any UI overlays while the game is busy.
+   */
+  gameBusy() {
+    this.parent.postMessage({ type: "VALKYRIE_BUSY" }, '*');
+  }
+  /**
+   * Call when a Cashier or Deposit button is pressed within the game to instruct the wrapper to open the appropriate UI for that.
+   */
+  openCashier() {
+    this.parent.postMessage({ type: "VALKYRIE_OPEN_CASHIER" }, '*');
+  }
+  /**
+   * Call when a Lobby or Home button is pressed within the game.
+   * The wrapper will be closed and user will be navigated to lobby or licensee page depending on casino configuration
+   */
+  openLobby() {
+    this.parent.postMessage({ type: "VALKYRIE_OPEN_LOBBY" }, '*');
+  }
 }
 
 type Autoplay = {
@@ -93,5 +122,17 @@ type Autoplay = {
  * Interface to be implemented per provider
  */
 export interface ValkyrieReceiver {
-  autoPlay: (action: "pause" | "resume" | "stop") => {}
+  /**
+   * Called when wrapper needs to control autoplay (if it has been started within the game).
+   */
+  autoPlay?: (action: "pause" | "resume" | "stop") => void
+  /**
+   * Called when the game volume should be changed, muted or not.
+   */
+  volume?: (muted: boolean) => void
+  /**
+   * Called when wrapper receives information that balance has been changed on the backend. 
+   * If provider does not receive such updates automatically, balance refresh should be initiated upon receiving this message.
+   */
+  refreshBalance?: () => void
 }
