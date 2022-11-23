@@ -7,12 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.0.10-beta.0 - 2022-11-23
 ### Added
-
 - CommonJs build as well
 
 ### Changed
-
 - remove tsconfig from distribution
 
 ## 0.0.9 - 2022-11-17
