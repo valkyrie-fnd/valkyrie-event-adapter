@@ -106,3 +106,13 @@ jobs:
           prerelease: ${{ startsWith(github.event.inputs.release-type, 'pre') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  notify:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "{{ github.actor }} created a new release: ${{ env.NEW_VERSION }}. ${{github.server_url}}/${{github.repository}}/releases/tag/${{ env.NEW_VERSION }}"
