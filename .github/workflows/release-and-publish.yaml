@@ -115,4 +115,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "{{ github.actor }} created a new release: ${{ env.NEW_VERSION }}. ${{github.server_url}}/${{github.repository}}/releases/tag/${{ env.NEW_VERSION }}"
+          args: "**${{ github.actor }}** created a new release: ${{ env.NEW_VERSION }}. ${{github.server_url}}/${{github.repository}}/releases/tag/${{ env.NEW_VERSION }}"
