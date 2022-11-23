@@ -1,18 +1,24 @@
 {
   "name": "@valkyrie-fnd/valkyrie-event-adapter",
-  "version": "0.0.9",
+  "version": "0.0.10-beta.0",
   "license": "MIT",
   "description": "Used by provider to communicate with valkyrie enabled operator",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.ts",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
+  },
   "files": [
     "/dist",
     "/src"
   ],
   "scripts": {
-    "build": "tsc"
+    "build": "rimraf ./dist && tsc && tsc --build tsconfig.cjs.json"
   },
   "devDependencies": {
+    "rimraf": "^3.0.2",
     "typescript": "^4.9.3"
   },
   "keywords": [
