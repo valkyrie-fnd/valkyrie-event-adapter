@@ -61,17 +61,26 @@ export class ValkyrieWrapper {
     return () => { this.target.removeEventListener("message", listener); }
   }
   /**
-  * Send VALKYRIE_LOAD_DONE message to parent
+  * Call once the game is loaded and has the UI ready to be shown to the player.
+  * Should not be called while the game is still in process of loading assets etc
   */
   gameLoaded() {
     this.parent.postMessage({ type: "VALKYRIE_LOAD_DONE" }, '*');
   }
   /**
-   * Send VALKYRIE_LOAD_ERROR message to parent
+   * Call when game fails to load.
+   * The wrapper can perform logging and automatic retries to try and recover.
    * @param errorMsg will end up on error property of sent message
    */
   gameLoadError(errorMsg: string) {
     this.parent.postMessage({ type: "VALKYRIE_LOAD_ERROR", error: errorMsg }, '*');
+  }
+  /**
+   * Call when game becomes idle (betting time). 
+   * Idle time can be used by the wrapper to display regulatory popups etc.
+   */
+  gameIdle() {
+    this.parent.postMessage({ type: "VALKYRIE_IDLE" }, '*');
   }
 }
 
