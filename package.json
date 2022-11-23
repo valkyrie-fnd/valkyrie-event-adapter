@@ -15,10 +15,13 @@
     "/src"
   ],
   "scripts": {
+    "generate-docs": "typedoc --plugin typedoc-plugin-markdown --readme none ./src/valkyrie-wrapper.ts",
     "build": "rimraf ./dist && tsc && tsc --build tsconfig.cjs.json"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",
+    "typedoc": "^0.23.21",
+    "typedoc-plugin-markdown": "^3.13.6",
     "typescript": "^4.9.3"
   },
   "keywords": [

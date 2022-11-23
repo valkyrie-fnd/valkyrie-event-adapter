@@ -15,21 +15,23 @@ const vw = new ValkyrieWrapper(window.parent, window, valkyrieReceiver);
 const unregister = vw.init();
 
 //....
-// eg when your game is finished loaded.
+// Call once the game is loaded and has the UI ready to be shown to the player.
+// Should not be called while the game is still in process of loading assets etc
 vw.gameLoaded();
 
 //...
 // If you need to remove any event listeners
 unregister();
 ```
-`valkyrieReceiver` needs to implement the `ValkyrieReceiver` interface. Commands sent by the wrapper of your game can be handled by that. When the wrapper send a autoplay command with any of the three options, the game should respect that command.
-``` typescript
-interface ValkyrieReceiver {
-  autoPlay: (action: "pause" | "resume" | "stop") => {}
-}
-```
+
+`valkyrieReceiver` needs to implement the `ValkyrieReceiver` interface.  
+Commands sent by the wrapper of your game can be handled by that.  
+When the wrapper send a autoplay command with any of the three options, the game should respect that command.
+
+
 `unregister` is a function that will remove event listeners that is added to the second parameter(`window`).
 
+Read documentation [here](./docs/README.md)
 ## Operator
 TBW
 
