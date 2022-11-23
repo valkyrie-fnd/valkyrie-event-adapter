@@ -2,7 +2,7 @@
 
 # Class: ValkyrieWrapper
 
-Create an instance of ValkyrieWrapper and pass it the parent/wrapper window as well as an implementation of `ValkyrieReceiver`
+Create an instance of ValkyrieWrapper and pass it the parent/wrapper window as well as an implementation of [ValkyrieReceiver](../interfaces/ValkyrieReceiver.md)
 
 ``` typescript
 const vw = new ValkyrieWrapper(window.parent, window, receiverImpl);
@@ -57,7 +57,7 @@ Used to post messages to parent window
 
 #### Defined in
 
-[valkyrie-wrapper.ts:34](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L34)
+[valkyrie-wrapper.ts:34](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L34)
 
 ## Properties
 
@@ -67,7 +67,7 @@ Used to post messages to parent window
 
 #### Defined in
 
-[valkyrie-wrapper.ts:25](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L25)
+[valkyrie-wrapper.ts:25](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L25)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 #### Defined in
 
-[valkyrie-wrapper.ts:27](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L27)
+[valkyrie-wrapper.ts:27](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L27)
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 #### Defined in
 
-[valkyrie-wrapper.ts:26](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L26)
+[valkyrie-wrapper.ts:26](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L26)
 
 ## Methods
 
@@ -104,7 +104,7 @@ Wrapper will avoid displaying any UI overlays while the game is busy.
 
 #### Defined in
 
-[valkyrie-wrapper.ts:98](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L98)
+[valkyrie-wrapper.ts:98](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L98)
 
 ___
 
@@ -121,7 +121,7 @@ Idle time can be used by the wrapper to display regulatory popups etc.
 
 #### Defined in
 
-[valkyrie-wrapper.ts:91](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L91)
+[valkyrie-wrapper.ts:91](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L91)
 
 ___
 
@@ -144,7 +144,7 @@ The wrapper can perform logging and automatic retries to try and recover.
 
 #### Defined in
 
-[valkyrie-wrapper.ts:84](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L84)
+[valkyrie-wrapper.ts:84](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L84)
 
 ___
 
@@ -161,7 +161,7 @@ Should not be called while the game is still in process of loading assets etc
 
 #### Defined in
 
-[valkyrie-wrapper.ts:76](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L76)
+[valkyrie-wrapper.ts:76](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L76)
 
 ___
 
@@ -203,7 +203,7 @@ function to remove event listeners
 
 #### Defined in
 
-[valkyrie-wrapper.ts:50](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L50)
+[valkyrie-wrapper.ts:50](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L50)
 
 ___
 
@@ -219,7 +219,7 @@ Call when a Cashier or Deposit button is pressed within the game to instruct the
 
 #### Defined in
 
-[valkyrie-wrapper.ts:104](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L104)
+[valkyrie-wrapper.ts:104](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L104)
 
 ___
 
@@ -236,4 +236,4 @@ The wrapper will be closed and user will be navigated to lobby or licensee page 
 
 #### Defined in
 
-[valkyrie-wrapper.ts:111](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L111)
+[valkyrie-wrapper.ts:111](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L111)

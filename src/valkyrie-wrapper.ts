@@ -6,7 +6,7 @@
  */
 
 /**
- * Create an instance of ValkyrieWrapper and pass it the parent/wrapper window as well as an implementation of `ValkyrieReceiver`
+ * Create an instance of ValkyrieWrapper and pass it the parent/wrapper window as well as an implementation of {@link ValkyrieReceiver}
  * 
  * ``` typescript
  * const vw = new ValkyrieWrapper(window.parent, window, receiverImpl);
@@ -119,7 +119,9 @@ type Autoplay = {
 }
 
 /**
- * Interface to be implemented per provider
+ * Interface to be implemented per provider.
+ * 
+ * Functions will be triggered by  {@link ValkyrieWrapper} when it receives event messages from the wrapper.
  */
 export interface ValkyrieReceiver {
   /**

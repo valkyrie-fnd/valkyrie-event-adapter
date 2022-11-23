@@ -15,7 +15,7 @@
     "/src"
   ],
   "scripts": {
-    "generate-docs": "typedoc --plugin typedoc-plugin-markdown --readme none ./src/valkyrie-wrapper.ts",
+    "generate-docs": "typedoc --plugin typedoc-plugin-markdown --gitRevision master --readme none ./src/valkyrie-wrapper.ts",
     "build": "rimraf ./dist && tsc && tsc --build tsconfig.cjs.json"
   },
   "devDependencies": {

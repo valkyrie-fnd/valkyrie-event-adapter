@@ -2,7 +2,9 @@
 
 # Interface: ValkyrieReceiver
 
-Interface to be implemented per provider
+Interface to be implemented per provider.
+
+Functions will be triggered by  [ValkyrieWrapper](../classes/ValkyrieWrapper.md) when it receives event messages from the wrapper.
 
 ## Table of contents
 
@@ -36,7 +38,7 @@ Called when wrapper needs to control autoplay (if it has been started within the
 
 #### Defined in
 
-[valkyrie-wrapper.ts:128](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L128)
+[valkyrie-wrapper.ts:130](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L130)
 
 ___
 
@@ -57,7 +59,7 @@ If provider does not receive such updates automatically, balance refresh should 
 
 #### Defined in
 
-[valkyrie-wrapper.ts:137](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L137)
+[valkyrie-wrapper.ts:139](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L139)
 
 ___
 
@@ -83,4 +85,4 @@ Called when the game volume should be changed, muted or not.
 
 #### Defined in
 
-[valkyrie-wrapper.ts:132](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/32e8af5/src/valkyrie-wrapper.ts#L132)
+[valkyrie-wrapper.ts:134](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L134)
