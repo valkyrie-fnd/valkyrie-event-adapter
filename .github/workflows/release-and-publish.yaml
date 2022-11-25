@@ -1,37 +1,35 @@
 name: Release and publish
 
 on:
-  workflow_dispatch:
-    inputs:
-      release-type:
-        type: choice
-        description: |
-          Release type
-          Use prepatch, preminor, premajor for the first "pre", to increment pre value use prerelease.
-        options:
-          - prerelease
-          - patch
-          - minor
-          - major
-          - prepatch
-          - preminor
-          - premajor
-        required: true
+  push:
+    branches:
+      - "main"
+
 jobs:
   build:
+    if: ${{startsWith(github.event.head_commit.message, 'Release *')}}
     runs-on: ubuntu-latest
     steps:
+      - name: get version from commit
+        env:
+          C_MESSAGE: ${{github.event.head_commit.message}}
+        # Commit message following structure: "Release *v1.0.3*", "Release *v2.0.0-beta.2"
+        run: |
+          echo "NEW_VERSION=$(echo $C_MESSAGE | cut -d'*' -f 2)" >> $GITHUB_ENV
+      - name: Verify version regex
+        if: ${{ contains(env.NEW_VERSION, 'beta') != true }}
+        run: |
+          [[ ! $NEW_VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] && echo "Version '$NEW_VERSION' does not match regex" && exit 1
+      - name: Verify beta version regex
+        if: ${{ contains(env.NEW_VERSION, 'beta') == true }}
+        run: |
+          [[ ! $NEW_VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]] && echo "Version '$NEW_VERSION' does not match regex" && exit 1
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version: "18.x"
           registry-url: "https://registry.npmjs.org"
           scope: "@valkyrie-fnd"
-      # Configure Git
-      - name: Git configuration
-        run: |
-          git config user.name Release-Workflow
-          git config user.email github-actions@github.com
 
       - name: Install yarn dependencies
         run: yarn
@@ -39,55 +37,36 @@ jobs:
       - name: Build dist
         run: yarn build
 
-      # Bump package version
       # Use tag latest
-      - name: Bump release version
-        if: startsWith(github.event.inputs.release-type, 'pre') != true
+      - name: release tag version
+        # if: contains($NEW_VERSION, 'beta') != true
+        if: ${{ contains(env.NEW_VERSION, 'beta') != true }}
         run: |
-          echo "NEW_VERSION=$(npm version --no-git-tag-version $RELEASE_TYPE)" >> $GITHUB_ENV
           echo "RELEASE_TAG=latest" >> $GITHUB_ENV
-        env:
-          RELEASE_TYPE: ${{ github.event.inputs.release-type }}
 
-      # Bump package pre-release version
       # Use tag beta for pre-release versions
-      - name: Bump pre-release version
-        if: startsWith(github.event.inputs.release-type, 'pre')
+      - name: release tag beta
+        if: ${{ contains(env.NEW_VERSION, 'beta') == true }}
         run: |
-          echo "NEW_VERSION=$(npm version --no-git-tag-version --preid=beta $RELEASE_TYPE)" >> $GITHUB_ENV
           echo "RELEASE_TAG=beta" >> $GITHUB_ENV
-        env:
-          RELEASE_TYPE: ${{ github.event.inputs.release-type }}
 
-      # Update changelog unreleased section with new version
+      # Update changelog unreleased section with new beta version, so github release can get the changelog
       - name: Update changelog
+        if: ${{ contains(env.NEW_VERSION, 'beta') == true }}
         uses: superfaceai/release-changelog-action@2
         with:
           path-to-changelog: CHANGELOG.md
           version: ${{ env.NEW_VERSION }}
           operation: release
 
-      # Add updated changelog unless it's a pre release.
-      - name: Add changelog
-        if: startsWith(github.event.inputs.release-type, 'pre') != true
-        run: |
-          git add "CHANGELOG.md"
-
-      # Commit changes
-      - name: Commit CHANGELOG.md and package.json changes and create tag
-        run: |
-          git add "package.json"
-          git commit -m "chore: release ${{ env.NEW_VERSION }}"
-          git tag ${{ env.NEW_VERSION }}
-
-      # Push repository changes
-      - name: Push changes to repository
+      # Create release tag
+      - name: Create release tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git push origin && git push --tags
+          git tag ${{ env.NEW_VERSION }}
+          git push origin ${{ env.NEW_VERSION }}
 
-      # Read version changelog
       - id: get-changelog
         name: Get version changelog
         uses: superfaceai/release-changelog-action@v2
@@ -102,7 +81,7 @@ jobs:
         with:
           tag_name: ${{ env.NEW_VERSION }}
           body: ${{ steps.get-changelog.outputs.changelog }}
-          prerelease: ${{ startsWith(github.event.inputs.release-type, 'pre') }}
+          prerelease: ${{ contains(env.NEW_VERSION, 'beta') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -111,7 +90,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "**${{ github.actor }}** created a new release: ${{ env.NEW_VERSION }}. ${{github.server_url}}/${{github.repository}}/releases/tag/${{ env.NEW_VERSION }}"
+          args: "**${{ github.actor }}** created a new release: ${{ env.NEW_VERSION }}. <${{github.server_url}}/${{github.repository}}/releases/tag/${{ env.NEW_VERSION }}>"
 
       # Publish version to public repository
       - name: Publish

@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Added
-- more functions on `ValkyrieWrapper`
+- Support more events on `ValkyrieWrapper`
 - Listens to more events
 - More extensive documentation
 - Add unit tests
