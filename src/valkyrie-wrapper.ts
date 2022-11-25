@@ -6,9 +6,9 @@
  */
 
 /**
- * Create an instance of ValkyrieWrapper and pass it the parent/wrapper window as well as an implementation of `ValkyrieReceiver`
+ * Create an instance of ValkyrieWrapper and pass it the parent/wrapper window as well as an implementation of {@link ValkyrieReceiver}
  * 
- * ```
+ * ``` typescript
  * const vw = new ValkyrieWrapper(window.parent, window, receiverImpl);
  * // Call init to register all listeners
  * const removeListeners = vm.init();
@@ -38,7 +38,7 @@ export class ValkyrieWrapper {
   }
   /**
    * call init after creating an instance, to set up listeners.
-   * ```
+   * ``` typescript
    * const vm = new ValkyrieWrapper(window.parent, window, receiverImpl);
    * const removeListeners = vm.init();
    * //....
@@ -50,9 +50,18 @@ export class ValkyrieWrapper {
   init(): () => void {
     const listener = (e: Event) => {
       const m = e as MessageEvent;
-      if (m?.data?.type === "VALKYRIE_AUTOPLAY") {
-        const ap = m.data as Autoplay;
-        this.receiver.autoPlay(ap.action);
+      switch (m?.data?.type) {
+        case "VALKYRIE_AUTOPLAY":
+          const ap = m.data as Autoplay;
+          this.receiver.autoPlay?.(ap.action);
+          break;
+        case "VALKYRIE_VOLUME":
+          const muted: boolean = m.data.muted;
+          this.receiver.volume?.(muted);
+          break;
+        case "VALKYRIE_REFRESH_BALANCE":
+          this.receiver.refreshBalance?.()
+          break;
       }
     }
     if (this.receiver) {
@@ -61,17 +70,46 @@ export class ValkyrieWrapper {
     return () => { this.target.removeEventListener("message", listener); }
   }
   /**
-  * Send VALKYRIE_LOAD_DONE message to parent
+  * Call once the game is loaded and has the UI ready to be shown to the player.
+  * Should not be called while the game is still in process of loading assets etc
   */
   gameLoaded() {
     this.parent.postMessage({ type: "VALKYRIE_LOAD_DONE" }, '*');
   }
   /**
-   * Send VALKYRIE_LOAD_ERROR message to parent
+   * Call when game fails to load.
+   * The wrapper can perform logging and automatic retries to try and recover.
    * @param errorMsg will end up on error property of sent message
    */
   gameLoadError(errorMsg: string) {
     this.parent.postMessage({ type: "VALKYRIE_LOAD_ERROR", error: errorMsg }, '*');
+  }
+  /**
+   * Call when game becomes idle (betting time). 
+   * Idle time can be used by the wrapper to display regulatory popups etc.
+   */
+  gameIdle() {
+    this.parent.postMessage({ type: "VALKYRIE_IDLE" }, '*');
+  }
+  /**
+   * Call when game starts with player participation. 
+   * Wrapper will avoid displaying any UI overlays while the game is busy.
+   */
+  gameBusy() {
+    this.parent.postMessage({ type: "VALKYRIE_BUSY" }, '*');
+  }
+  /**
+   * Call when a Cashier or Deposit button is pressed within the game to instruct the wrapper to open the appropriate UI for that.
+   */
+  openCashier() {
+    this.parent.postMessage({ type: "VALKYRIE_OPEN_CASHIER" }, '*');
+  }
+  /**
+   * Call when a Lobby or Home button is pressed within the game.
+   * The wrapper will be closed and user will be navigated to lobby or licensee page depending on casino configuration
+   */
+  openLobby() {
+    this.parent.postMessage({ type: "VALKYRIE_OPEN_LOBBY" }, '*');
   }
 }
 
@@ -81,8 +119,22 @@ type Autoplay = {
 }
 
 /**
- * Interface to be implemented per provider
+ * Interface to be implemented per provider.
+ * 
+ * Functions will be triggered by  {@link ValkyrieWrapper} when it receives event messages from the wrapper.
  */
 export interface ValkyrieReceiver {
-  autoPlay: (action: "pause" | "resume" | "stop") => {}
+  /**
+   * Called when wrapper needs to control autoplay (if it has been started within the game).
+   */
+  autoPlay?: (action: "pause" | "resume" | "stop") => void
+  /**
+   * Called when the game volume should be changed, muted or not.
+   */
+  volume?: (muted: boolean) => void
+  /**
+   * Called when wrapper receives information that balance has been changed on the backend. 
+   * If provider does not receive such updates automatically, balance refresh should be initiated upon receiving this message.
+   */
+  refreshBalance?: () => void
 }

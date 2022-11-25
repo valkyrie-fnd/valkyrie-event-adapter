@@ -6,7 +6,8 @@
     ],
     "declaration": true,
     "declarationDir": "./dist/types",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "esModuleInterop": true,
   },
   "include": [
     "./**/*"
