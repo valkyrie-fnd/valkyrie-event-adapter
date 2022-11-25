@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - more functions on `ValkyrieWrapper`
 - Listens to more events
 - More extensive documentation
+- Add unit tests
 
 ## 0.0.10 - 2022-11-23
 ### Added
