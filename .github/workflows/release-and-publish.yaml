@@ -30,6 +30,7 @@ jobs:
           node-version: "18.x"
           registry-url: "https://registry.npmjs.org"
           scope: "@valkyrie-fnd"
+          cache: "yarn"
 
       - name: Install yarn dependencies
         run: yarn

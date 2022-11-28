@@ -40,4 +40,6 @@ TBW
 
 ## Publishing
 
-Update [CHANGELOG](./CHANGELOG.md) and then use Release workflow to release and publish a new version
+Make sure [CHANGELOG](./CHANGELOG.md) is updated with relevant changes.
+
+When ready to release then use [Prepare release workflow](https://github.com/valkyrie-fnd/valkyrie-event-adapter/actions/workflows/prepare-release.yaml) to prepare a release. This will create a PR for you to merge. Upon merge of the PR a github release will be created as well as the package published to NPM.
