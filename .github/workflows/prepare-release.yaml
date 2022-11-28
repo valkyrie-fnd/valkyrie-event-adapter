@@ -1,0 +1,73 @@
+name: Prepare release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        type: choice
+        description: |
+          Release type
+          Use prepatch, preminor, premajor for the first "pre", to increment pre value use prerelease.
+        options:
+          - prerelease
+          - patch
+          - minor
+          - major
+          - prepatch
+          - preminor
+          - premajor
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_TYPE: ${{ github.event.inputs.release-type }}
+    steps:
+      - uses: actions/checkout@v3
+      # Configure Git
+      - name: Git configuration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump package version
+        run: |
+          echo "NEW_VERSION=$(npm version --no-git-tag-version --preid=beta $RELEASE_TYPE)" >> $GITHUB_ENV
+
+      # Update changelog unreleased section with new version
+      - name: Update changelog
+        if: startsWith(github.event.inputs.release-type, 'pre') != true
+        uses: superfaceai/release-changelog-action@2
+        with:
+          path-to-changelog: CHANGELOG.md
+          version: ${{ env.NEW_VERSION }}
+          operation: release
+
+      - name: Create release branch
+        run: git checkout -b release/$NEW_VERSION
+
+      # Add updated changelog unless it's a pre release.
+      - name: Add changelog
+        if: startsWith(github.event.inputs.release-type, 'pre') != true
+        run: |
+          git add "CHANGELOG.md"
+
+      # Commit changes
+      - name: Commit CHANGELOG.md and package.json changes
+        run: |
+          git add "package.json"
+          git commit -m "chore: release $NEW_VERSION"
+
+      # Push repository changes
+      - name: Push changes to repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push -u origin release/$NEW_VERSION
+
+      # Create a pull request using github api with the one triggering the workflow as reviewer
+      - name: Create pull request
+        run: gh pr create --title "Release *$NEW_VERSION*" --body "Approve and merge to build and publish release" --reviewer ${{github.actor}}
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
