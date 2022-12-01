@@ -19,11 +19,11 @@ jobs:
       - name: Verify version regex
         if: ${{ contains(env.NEW_VERSION, 'beta') != true }}
         run: |
-          [[ ! $NEW_VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] && echo "Version '$NEW_VERSION' does not match regex" && exit 1
+          [[ ! ${{ env.NEW_VERSION }} =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] && echo "Version '${{ env.NEW_VERSION }}' does not match regex" && exit 1
       - name: Verify beta version regex
         if: ${{ contains(env.NEW_VERSION, 'beta') == true }}
         run: |
-          [[ ! $NEW_VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]] && echo "Version '$NEW_VERSION' does not match regex" && exit 1
+          [[ ! ${{ env.NEW_VERSION }} =~ ^v[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+$ ]] && echo "Version '${{ env.NEW_VERSION }}' does not match regex" && exit 1
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
