@@ -54,7 +54,7 @@ jobs:
       # Update changelog unreleased section with new beta version, so github release can get the changelog
       - name: Update changelog
         if: ${{ contains(env.NEW_VERSION, 'beta') == true }}
-        uses: superfaceai/release-changelog-action@2
+        uses: superfaceai/release-changelog-action@v2
         with:
           path-to-changelog: CHANGELOG.md
           version: ${{ env.NEW_VERSION }}
