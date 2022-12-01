@@ -7,13 +7,15 @@ on:
 
 jobs:
   build:
-    if: ${{startsWith(github.event.head_commit.message, 'Release *')}}
+    env:
+      SEARCH_STRING: "chore: release *v"
+    if: ${{startsWith(github.event.head_commit.message, env.SEARCH_STRING)}}
     runs-on: ubuntu-latest
     steps:
       - name: get version from commit
         env:
           C_MESSAGE: ${{github.event.head_commit.message}}
-        # Commit message following structure: "Release *v1.0.3*", "Release *v2.0.0-beta.2"
+        # Commit message following structure: "chore: release *v1.0.3*", "chore: release *v2.0.0-beta.2"
         run: |
           echo "NEW_VERSION=$(echo $C_MESSAGE | cut -d'*' -f 2)" >> $GITHUB_ENV
       - name: Verify version regex

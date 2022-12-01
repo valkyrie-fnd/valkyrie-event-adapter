@@ -57,7 +57,7 @@ jobs:
       - name: Commit CHANGELOG.md and package.json changes
         run: |
           git add "package.json"
-          git commit -m "chore: release $NEW_VERSION"
+          git commit -m "chore: release *$NEW_VERSION*"
 
       # Push repository changes
       - name: Push changes to repository
@@ -68,6 +68,6 @@ jobs:
 
       # Create a pull request using github api with the one triggering the workflow as reviewer
       - name: Create pull request
-        run: gh pr create --title "Release *$NEW_VERSION*" --body "Approve and merge to build and publish release" --reviewer ${{github.actor}}
+        run: "gh pr create --title 'chore: release *$NEW_VERSION*' --body 'Approve and merge to build and publish release' --reviewer ${{github.actor}}"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
