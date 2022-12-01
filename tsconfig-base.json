@@ -5,11 +5,13 @@
       "DOM"
     ],
     "declaration": true,
-    "declarationDir": "./dist/types",
     "moduleResolution": "node",
     "esModuleInterop": true,
   },
   "include": [
     "./**/*"
+  ],
+  "exclude": [
+    "node_modules",
   ]
 }
