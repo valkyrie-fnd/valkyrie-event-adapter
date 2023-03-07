@@ -98,31 +98,48 @@ describe("sending messages to parent", () => {
   test("gameLoaded", () => {
     vw.gameLoaded();
     expect(window.postMessage)
-      .toHaveBeenCalledWith(expect.objectContaining({ type: "VALKYRIE_LOAD_DONE" }), '*');
+      .toHaveBeenCalledWith({ type: "VALKYRIE_LOAD_DONE", status: "done" }, '*');
   });
   test("gameLoadError", () => {
     vw.gameLoadError("some error");
     expect(window.postMessage)
-      .toHaveBeenCalledWith(expect.objectContaining({ type: "VALKYRIE_LOAD_ERROR", error: "some error" }), '*');
+      .toHaveBeenCalledWith({ type: "VALKYRIE_LOAD_ERROR", reason: "some error" }, '*');
   });
   test("gameIdle", () => {
     vw.gameIdle();
     expect(window.postMessage)
-      .toHaveBeenCalledWith(expect.objectContaining({ type: "VALKYRIE_IDLE" }), '*');
+      .toHaveBeenCalledWith({ type: "VALKYRIE_IDLE" }, '*');
   });
   test("gameBusy", () => {
     vw.gameBusy();
     expect(window.postMessage)
-      .toHaveBeenCalledWith(expect.objectContaining({ type: "VALKYRIE_BUSY" }), '*');
+      .toHaveBeenCalledWith({ type: "VALKYRIE_BUSY" }, '*');
   });
   test("openCashier", () => {
     vw.openCashier();
     expect(window.postMessage)
-      .toHaveBeenCalledWith(expect.objectContaining({ type: "VALKYRIE_OPEN_CASHIER" }), '*');
+      .toHaveBeenCalledWith({ type: "VALKYRIE_OPEN_CASHIER" }, '*');
   });
   test("openLobby", () => {
     vw.openLobby();
     expect(window.postMessage)
-      .toHaveBeenCalledWith(expect.objectContaining({ type: "VALKYRIE_OPEN_LOBBY" }), '*');
+      .toHaveBeenCalledWith({ type: "VALKYRIE_OPEN_LOBBY" }, '*');
+  });
+  describe("gameLoading", () => {
+    test("sending progress below 0", () => {
+      vw.gameLoading(-10)
+      expect(window.postMessage)
+        .toHaveBeenCalledWith({ type: "VALKYRIE_LOAD_PROGRESS", progress: 0 }, '*');
+    });
+    test("sending progress above 100", () => {
+      vw.gameLoading(110)
+      expect(window.postMessage)
+        .toHaveBeenCalledWith({ type: "VALKYRIE_LOAD_PROGRESS", progress: 100 }, '*');
+    });
+    test("sending progress between 0 and 100", () => {
+      vw.gameLoading(66)
+      expect(window.postMessage)
+        .toHaveBeenCalledWith({ type: "VALKYRIE_LOAD_PROGRESS", progress: 66 }, '*');
+    });
   });
 });
