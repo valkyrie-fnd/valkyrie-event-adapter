@@ -25,7 +25,7 @@ unregister();
 ```
 
 `valkyrieReceiver` needs to implement the `ValkyrieReceiver` interface.  
-Commands sent by the wrapper of your game can be handled by that.  
+Commands sent by the wrapper of your game should be handled by it.  
 When the wrapper send a autoplay command with any of the three options, the game should respect that command.
 
 

@@ -124,11 +124,57 @@ export class ValkyrieWrapper {
   openLobby() {
     this.parent.postMessage({ type: "VALKYRIE_OPEN_LOBBY" }, '*');
   }
+  /**
+   * Call when Player navigates to home by pressing a "home" button.
+   */
+  openHome() {
+    this.parent.postMessage({ type: "VALKYRIE_OPEN_HOME" }, '*');
+  }
+  /**
+   * If game provides fullscreen capability, call this when entering fullscreen so wrapper can handle that event.
+   */
+  enterFullScreen() {
+    this.parent.postMessage({ type: "VALKYRIE_FULLSCREEN", action: "enter" }, '*');
+  }
+  /**
+   * If game provides fullscreen capability, call this when exiting fullscreen so wrapper can handle that event.
+   */
+  exitFullScreen() {
+    this.parent.postMessage({ type: "VALKYRIE_FULLSCREEN", action: "exit" }, '*');
+  }
+  /**
+   * Send pause auto play event to wrapper.
+   * If autoplay has been started withing the game, in order to sync state of play with wrapper
+   */
+  pauseAutoPlay() {
+    this.parent.postMessage({ type: "VALKYRIE_AUTOPLAY", action: "pause" }, '*');
+  }
+  /**
+   * Send resume auto play event to wrapper.
+   * If autoplay has been started withing the game, in order to sync state of play with wrapper
+   */
+  resumeAutoPlay() {
+    this.parent.postMessage({ type: "VALKYRIE_AUTOPLAY", action: "resume" }, '*');
+  }
+  /**
+   * Send stop auto play event to wrapper.
+   * If autoplay has been started withing the game, in order to sync state of play with wrapper
+   */
+  stopAutoPlay() {
+    this.parent.postMessage({ type: "VALKYRIE_AUTOPLAY", action: "stop" }, '*');
+  }
 }
+/**
+ * Possible values for autoplay action
+ */
+type AutoPlayAction = "pause" | "resume" | "stop";
 
+/**
+ * Received data from iframe when autoplay event
+ */
 type Autoplay = {
   type: string;
-  action: "pause" | "resume" | "stop";
+  action: AutoPlayAction
 }
 
 /**
@@ -140,7 +186,7 @@ export interface ValkyrieReceiver {
   /**
    * Called when wrapper needs to control autoplay (if it has been started within the game).
    */
-  autoPlay?: (action: "pause" | "resume" | "stop") => void
+  autoPlay?: (action: AutoPlayAction) => void
   /**
    * Called when the game volume should be changed, muted or not.
    */

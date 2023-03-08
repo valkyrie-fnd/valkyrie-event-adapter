@@ -125,6 +125,38 @@ describe("sending messages to parent", () => {
     expect(window.postMessage)
       .toHaveBeenCalledWith({ type: "VALKYRIE_OPEN_LOBBY" }, '*');
   });
+  test("openHome", () => {
+    vw.openHome();
+    expect(window.postMessage)
+      .toHaveBeenCalledWith({ type: "VALKYRIE_OPEN_HOME" }, '*');
+  });
+  test("enter fullscreen", () => {
+    vw.enterFullScreen();
+    expect(window.postMessage)
+      .toHaveBeenCalledWith({ type: "VALKYRIE_FULLSCREEN", action: "enter" }, '*');
+  });
+  test("exit fullscreen", () => {
+    vw.exitFullScreen();
+    expect(window.postMessage)
+      .toHaveBeenCalledWith({ type: "VALKYRIE_FULLSCREEN", action: "exit" }, '*');
+  });
+  describe("autoPlay", () => {
+    test("pause", () => {
+      vw.pauseAutoPlay();
+      expect(window.postMessage)
+        .toHaveBeenCalledWith({ type: "VALKYRIE_AUTOPLAY", action: "pause" }, '*');
+    });
+    test("resume", () => {
+      vw.pauseAutoPlay();
+      expect(window.postMessage)
+        .toHaveBeenCalledWith({ type: "VALKYRIE_AUTOPLAY", action: "resume" }, '*');
+    });
+    test("stop", () => {
+      vw.pauseAutoPlay();
+      expect(window.postMessage)
+        .toHaveBeenCalledWith({ type: "VALKYRIE_AUTOPLAY", action: "stop" }, '*');
+    });
+  })
   describe("gameLoading", () => {
     test("sending progress below 0", () => {
       vw.gameLoading(-10)
