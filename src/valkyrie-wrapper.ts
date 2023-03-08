@@ -167,12 +167,12 @@ export class ValkyrieWrapper {
 /**
  * Possible values for autoplay action
  */
-type AutoPlayAction = "pause" | "resume" | "stop";
+export type AutoPlayAction = "pause" | "resume" | "stop";
 
 /**
  * Received data from iframe when autoplay event
  */
-type Autoplay = {
+export type Autoplay = {
   type: string;
   action: AutoPlayAction
 }
