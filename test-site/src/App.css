@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  min-height: 100vh;
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .App-logo {
@@ -13,9 +18,14 @@
   }
 }
 
+iframe {
+  width: 90vw;
+  height: 55vh;
+}
+
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  padding-top: 2vh;
+  padding-bottom: 4vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,10 +38,38 @@
   color: #61dafb;
 }
 
+.received-events {
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.game-url {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+}
+
+.event-paper {
+  padding: 5px;
+  width: 200px;
+  overflow-wrap: break-word;
+}
+
+.event-paper-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
