@@ -2,6 +2,7 @@
   "extends": "./tsconfig-base.json",
   "exclude": [
     "**/tests/**/*",
-    "jest.config.ts"
+    "jest.config.ts",
+    "test-site"
   ]
 }
