@@ -74,15 +74,28 @@ export class ValkyrieWrapper {
   * Should not be called while the game is still in process of loading assets etc
   */
   gameLoaded() {
-    this.parent.postMessage({ type: "VALKYRIE_LOAD_DONE" }, '*');
+    this.parent.postMessage({ type: "VALKYRIE_LOAD_DONE", status: "done" }, '*');
   }
   /**
    * Call when game fails to load.
    * The wrapper can perform logging and automatic retries to try and recover.
-   * @param errorMsg will end up on error property of sent message
+   * @param errorMsg will end up on `reason` property of sent message
    */
   gameLoadError(errorMsg: string) {
-    this.parent.postMessage({ type: "VALKYRIE_LOAD_ERROR", error: errorMsg }, '*');
+    this.parent.postMessage({ type: "VALKYRIE_LOAD_ERROR", reason: errorMsg }, '*');
+  }
+
+  /**
+   * Send game loading progress to wrapper.
+   * Should be called with 0 as soon as the page loads inside the iframe.
+   * Following, as the game starts loading, events with an increasing progress
+   * should be dispatched several times until the loading completes.
+   * A minimum number of 10 events is suggested.
+   * @param progress number between 0-100 to signal loading progress. Will be clamped between 0-100
+   */
+  gameLoading(progress: number) {
+    const p = Math.min(Math.max(0, progress), 100)
+    this.parent.postMessage({ type: "VALKYRIE_LOAD_PROGRESS", progress: p }, '*')
   }
   /**
    * Call when game becomes idle (betting time). 
@@ -111,11 +124,57 @@ export class ValkyrieWrapper {
   openLobby() {
     this.parent.postMessage({ type: "VALKYRIE_OPEN_LOBBY" }, '*');
   }
+  /**
+   * Call when Player navigates to home by pressing a "home" button.
+   */
+  openHome() {
+    this.parent.postMessage({ type: "VALKYRIE_OPEN_HOME" }, '*');
+  }
+  /**
+   * If game provides fullscreen capability, call this when entering fullscreen so wrapper can handle that event.
+   */
+  enterFullScreen() {
+    this.parent.postMessage({ type: "VALKYRIE_FULLSCREEN", action: "enter" }, '*');
+  }
+  /**
+   * If game provides fullscreen capability, call this when exiting fullscreen so wrapper can handle that event.
+   */
+  exitFullScreen() {
+    this.parent.postMessage({ type: "VALKYRIE_FULLSCREEN", action: "exit" }, '*');
+  }
+  /**
+   * Send pause auto play event to wrapper.
+   * If autoplay has been started withing the game, in order to sync state of play with wrapper
+   */
+  pauseAutoPlay() {
+    this.parent.postMessage({ type: "VALKYRIE_AUTOPLAY", action: "pause" }, '*');
+  }
+  /**
+   * Send resume auto play event to wrapper.
+   * If autoplay has been started withing the game, in order to sync state of play with wrapper
+   */
+  resumeAutoPlay() {
+    this.parent.postMessage({ type: "VALKYRIE_AUTOPLAY", action: "resume" }, '*');
+  }
+  /**
+   * Send stop auto play event to wrapper.
+   * If autoplay has been started withing the game, in order to sync state of play with wrapper
+   */
+  stopAutoPlay() {
+    this.parent.postMessage({ type: "VALKYRIE_AUTOPLAY", action: "stop" }, '*');
+  }
 }
+/**
+ * Possible values for autoplay action
+ */
+export type AutoPlayAction = "pause" | "resume" | "stop";
 
-type Autoplay = {
+/**
+ * Received data from iframe when autoplay event
+ */
+export type Autoplay = {
   type: string;
-  action: "pause" | "resume" | "stop";
+  action: AutoPlayAction
 }
 
 /**
@@ -127,7 +186,7 @@ export interface ValkyrieReceiver {
   /**
    * Called when wrapper needs to control autoplay (if it has been started within the game).
    */
-  autoPlay?: (action: "pause" | "resume" | "stop") => void
+  autoPlay?: (action: AutoPlayAction) => void
   /**
    * Called when the game volume should be changed, muted or not.
    */

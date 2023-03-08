@@ -31,13 +31,20 @@ Create an implementation of `ValkyrieReceiver` and pass it to `ValkyrieWrapper`.
 
 ### Methods
 
+- [enterFullScreen](ValkyrieWrapper.md#enterfullscreen)
+- [exitFullScreen](ValkyrieWrapper.md#exitfullscreen)
 - [gameBusy](ValkyrieWrapper.md#gamebusy)
 - [gameIdle](ValkyrieWrapper.md#gameidle)
 - [gameLoadError](ValkyrieWrapper.md#gameloaderror)
 - [gameLoaded](ValkyrieWrapper.md#gameloaded)
+- [gameLoading](ValkyrieWrapper.md#gameloading)
 - [init](ValkyrieWrapper.md#init)
 - [openCashier](ValkyrieWrapper.md#opencashier)
+- [openHome](ValkyrieWrapper.md#openhome)
 - [openLobby](ValkyrieWrapper.md#openlobby)
+- [pauseAutoPlay](ValkyrieWrapper.md#pauseautoplay)
+- [resumeAutoPlay](ValkyrieWrapper.md#resumeautoplay)
+- [stopAutoPlay](ValkyrieWrapper.md#stopautoplay)
 
 ## Constructors
 
@@ -91,6 +98,38 @@ ___
 
 ## Methods
 
+### enterFullScreen
+
+▸ **enterFullScreen**(): `void`
+
+If game provides fullscreen capability, call this when entering fullscreen so wrapper can handle that event.
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[valkyrie-wrapper.ts:136](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L136)
+
+___
+
+### exitFullScreen
+
+▸ **exitFullScreen**(): `void`
+
+If game provides fullscreen capability, call this when exiting fullscreen so wrapper can handle that event.
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[valkyrie-wrapper.ts:142](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L142)
+
+___
+
 ### gameBusy
 
 ▸ **gameBusy**(): `void`
@@ -104,7 +143,7 @@ Wrapper will avoid displaying any UI overlays while the game is busy.
 
 #### Defined in
 
-[valkyrie-wrapper.ts:98](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L98)
+[valkyrie-wrapper.ts:111](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L111)
 
 ___
 
@@ -121,7 +160,7 @@ Idle time can be used by the wrapper to display regulatory popups etc.
 
 #### Defined in
 
-[valkyrie-wrapper.ts:91](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L91)
+[valkyrie-wrapper.ts:104](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L104)
 
 ___
 
@@ -136,7 +175,7 @@ The wrapper can perform logging and automatic retries to try and recover.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `errorMsg` | `string` | will end up on error property of sent message |
+| `errorMsg` | `string` | will end up on `reason` property of sent message |
 
 #### Returns
 
@@ -162,6 +201,32 @@ Should not be called while the game is still in process of loading assets etc
 #### Defined in
 
 [valkyrie-wrapper.ts:76](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L76)
+
+___
+
+### gameLoading
+
+▸ **gameLoading**(`progress`): `void`
+
+Send game loading progress to wrapper.
+Should be called with 0 as soon as the page loads inside the iframe.
+Following, as the game starts loading, events with an increasing progress
+should be dispatched several times until the loading completes.
+A minimum number of 10 events is suggested.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `progress` | `number` | number between 0-100 to signal loading progress. Will be clamped between 0-100 |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[valkyrie-wrapper.ts:96](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L96)
 
 ___
 
@@ -219,7 +284,23 @@ Call when a Cashier or Deposit button is pressed within the game to instruct the
 
 #### Defined in
 
-[valkyrie-wrapper.ts:104](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L104)
+[valkyrie-wrapper.ts:117](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L117)
+
+___
+
+### openHome
+
+▸ **openHome**(): `void`
+
+Call when Player navigates to home by pressing a "home" button.
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[valkyrie-wrapper.ts:130](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L130)
 
 ___
 
@@ -236,4 +317,55 @@ The wrapper will be closed and user will be navigated to lobby or licensee page 
 
 #### Defined in
 
-[valkyrie-wrapper.ts:111](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L111)
+[valkyrie-wrapper.ts:124](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L124)
+
+___
+
+### pauseAutoPlay
+
+▸ **pauseAutoPlay**(): `void`
+
+Send pause auto play event to wrapper.
+If autoplay has been started withing the game, in order to sync state of play with wrapper
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[valkyrie-wrapper.ts:149](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L149)
+
+___
+
+### resumeAutoPlay
+
+▸ **resumeAutoPlay**(): `void`
+
+Send resume auto play event to wrapper.
+If autoplay has been started withing the game, in order to sync state of play with wrapper
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[valkyrie-wrapper.ts:156](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L156)
+
+___
+
+### stopAutoPlay
+
+▸ **stopAutoPlay**(): `void`
+
+Send stop auto play event to wrapper.
+If autoplay has been started withing the game, in order to sync state of play with wrapper
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[valkyrie-wrapper.ts:163](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L163)

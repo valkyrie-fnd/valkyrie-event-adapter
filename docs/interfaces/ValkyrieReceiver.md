@@ -18,7 +18,7 @@ Functions will be triggered by  [ValkyrieWrapper](../classes/ValkyrieWrapper.md)
 
 ### autoPlay
 
-• `Optional` **autoPlay**: (`action`: ``"pause"`` \| ``"stop"`` \| ``"resume"``) => `void`
+• `Optional` **autoPlay**: (`action`: [`AutoPlayAction`](../README.md#autoplayaction)) => `void`
 
 #### Type declaration
 
@@ -30,7 +30,7 @@ Called when wrapper needs to control autoplay (if it has been started within the
 
 | Name | Type |
 | :------ | :------ |
-| `action` | ``"pause"`` \| ``"stop"`` \| ``"resume"`` |
+| `action` | [`AutoPlayAction`](../README.md#autoplayaction) |
 
 ##### Returns
 
@@ -38,7 +38,7 @@ Called when wrapper needs to control autoplay (if it has been started within the
 
 #### Defined in
 
-[valkyrie-wrapper.ts:130](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L130)
+[valkyrie-wrapper.ts:189](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L189)
 
 ___
 
@@ -59,7 +59,7 @@ If provider does not receive such updates automatically, balance refresh should 
 
 #### Defined in
 
-[valkyrie-wrapper.ts:139](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L139)
+[valkyrie-wrapper.ts:198](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L198)
 
 ___
 
@@ -85,4 +85,4 @@ Called when the game volume should be changed, muted or not.
 
 #### Defined in
 
-[valkyrie-wrapper.ts:134](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L134)
+[valkyrie-wrapper.ts:193](https://github.com/valkyrie-fnd/valkyrie-event-adapter/blob/master/src/valkyrie-wrapper.ts#L193)
