@@ -147,12 +147,12 @@ describe("sending messages to parent", () => {
         .toHaveBeenCalledWith({ type: "VALKYRIE_AUTOPLAY", action: "pause" }, '*');
     });
     test("resume", () => {
-      vw.pauseAutoPlay();
+      vw.resumeAutoPlay();
       expect(window.postMessage)
         .toHaveBeenCalledWith({ type: "VALKYRIE_AUTOPLAY", action: "resume" }, '*');
     });
     test("stop", () => {
-      vw.pauseAutoPlay();
+      vw.stopAutoPlay();
       expect(window.postMessage)
         .toHaveBeenCalledWith({ type: "VALKYRIE_AUTOPLAY", action: "stop" }, '*');
     });
