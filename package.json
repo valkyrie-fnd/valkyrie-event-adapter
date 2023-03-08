@@ -42,5 +42,5 @@
     "type": "git",
     "url": "git+https://github.com/valkyrie-fnd/valkyrie-event-adapter.git"
   },
-  "packageManager": "yarn@3.3.0"
+  "packageManager": "yarn@3.4.1"
 }
