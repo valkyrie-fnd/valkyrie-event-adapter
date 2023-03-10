@@ -20,7 +20,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Rajdhani, sans-serif',
+    fontFamily: 'Bai Jamjuree, sans-serif',
   },
   components: {
     MuiPaper: {
