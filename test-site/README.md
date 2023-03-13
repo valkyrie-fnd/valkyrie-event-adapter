@@ -1,4 +1,11 @@
-# Getting Started with Create React App
+# Test site
+Add a url to a game session in the field and press "Go to site", will show that game/site in the iframe available. Any events sent by the frame will be displayed in the top part. The top three have data sent by the iframe, the ones below that are just the events, without any data. If they are green/have a green check box it is successful. If there is an orange checkbox, the event was sent, but something is wrong with the data. The top 
+
+ Sending auto play, volume, and refresh balance events to the iframe can be done by the controls in the middle.
+
+ ![test-site](./test-site.png)
+
+# Running locally
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
