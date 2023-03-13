@@ -32,6 +32,14 @@ When the wrapper send a autoplay command with any of the three options, the game
 `unregister` is a function that will remove event listeners that is added to the second parameter(`window`).
 
 Read documentation [here](./docs/README.md)
+
+## Test site
+To verify a game send the correct events and has implemented `ValkyrieReceiver` interface correctly you can use the test site.
+
+It is available [here](https://valkyrie-fnd.github.io/valkyrie-event-adapter). To use it, simply paste a url to a game in the input field and validate all events are coming in as expected, as well as validating the game iframe responds to the events sent to it.
+![test-site](./test-site/test-site.png)
+
+The source code for the test site is available [here](./test-site/).
 ## Operator
 TBW
 
