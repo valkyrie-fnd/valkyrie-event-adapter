@@ -1,5 +1,6 @@
 {
   "name": "test-site",
+  "homepage": "https://valkyrie-fnd.github.io/valkyrie-event-adapter",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
