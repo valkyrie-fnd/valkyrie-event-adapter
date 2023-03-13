@@ -1,16 +1,35 @@
-## valkyrie-event-adapter
+# valkyrie-event-adapter
+[![](https://img.shields.io/badge/License-MIT%20-brightgreen.svg)](./LICENSE.md) 
+[![](https://img.shields.io/github/actions/workflow/status/valkyrie-fnd/valkyrie-event-adapter/release-and-publish.yaml)](https://github.com/valkyrie-fnd/valkyrie-event-adapter/actions/workflows/release-and-publish.yaml)
+![](https://img.shields.io/github/last-commit/valkyrie-fnd/valkyrie-event-adapter)
+[![](https://img.shields.io/website?url=https%3A%2F%2Fvalkyrie-fnd.github-io%2Fvalkyrie-event-adapter)](https://valkyrie.bet/docs)
+![](https://img.shields.io/github/languages/top/valkyrie-fnd/valkyrie-event-adapter)
+![](https://img.shields.io/tokei/lines/github/valkyrie-fnd/valkyrie-event-adapter)
+[![](https://img.shields.io/github/v/release/valkyrie-fnd/valkyrie-event-adapter)](https://github.com/valkyrie-fnd/valkyrie-event-adapter/releases)
+![](https://img.shields.io/maintenance/yes/2023)
+
 Frontend library written in Typescript to use in game provider games to communicate with operator displaying your game.
 
 Also used on operator side in order to map events from providers to your system.
 
-## Usage
+[Documentation](./docs/README.md)
 
+# Usage
+## Installing
+```
+npm i @valkyrie-fnd/valkyrie-event-adapter
+```
+or using yarn
+```
+yarn add @valkyrie-fnd/valkyrie-event-adapter
+```
 ## Provider 
 If your're a provider and want to follow Valkyrie events you use `ValkyrieWrapper`
 
 ``` typescript
 import { ValkyrieWrapper } from '@valkyrie-fnd/valkyrie-event-adapter';
-
+//...
+// Get valkyrieReceiver instance
 const vw = new ValkyrieWrapper(window.parent, window, valkyrieReceiver);
 const unregister = vw.init();
 
@@ -24,29 +43,34 @@ vw.gameLoaded();
 unregister();
 ```
 
-`valkyrieReceiver` needs to implement the `ValkyrieReceiver` interface.  
+`valkyrieReceiver` needs to implement the `ValkyrieReceiver` interface.
+``` typescript
+export interface ValkyrieReceiver {
+  autoPlay?: (action: AutoPlayAction) => void
+  volume?: (muted: boolean) => void
+  refreshBalance?: () => void
+}
+```
 Commands sent by the wrapper of your game should be handled by it.  
-When the wrapper send a autoplay command with any of the three options, the game should respect that command.
+Eg. when the wrapper send a autoplay command the `autoPlay`-function on `ValkyrieReceiver` will be called and your game should handle it.
 
 
 `unregister` is a function that will remove event listeners that is added to the second parameter(`window`).
 
-Read documentation [here](./docs/README.md)
+Read documentation full [here](./docs/README.md)
 
-## Test site
+## Operator
+TBW
+
+# Test site
 To verify a game send the correct events and has implemented `ValkyrieReceiver` interface correctly you can use the test site.
 
 It is available [here](https://valkyrie-fnd.github.io/valkyrie-event-adapter). To use it, simply paste a url to a game in the input field and validate all events are coming in as expected, as well as validating the game iframe responds to the events sent to it.
 ![test-site](./test-site/test-site.png)
 
 The source code for the test site is available [here](./test-site/).
-## Operator
-TBW
 
-## Events
-TBW
-
-## Publishing
+# Publishing
 
 Make sure [CHANGELOG](./CHANGELOG.md) is updated with relevant changes.
 
