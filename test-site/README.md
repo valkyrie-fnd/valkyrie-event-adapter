@@ -1,5 +1,9 @@
 # Test site
-Add a url to a game session in the field and press "Go to site", will show that game/site in the iframe available. Any events sent by the frame will be displayed in the top part. The top three have data sent by the iframe as well as "Last Fullscreen" and "Last Autoplay", the other ones have no data and are just the events and will turn green ones triggered from the iframe/game. If they are green/have a green check box it is successful. If there is an orange checkbox, the event was sent, but something is wrong with the data.
+Add a url to a game session in the field and press "Go to site", will show that game/site in the iframe available. 
+
+Any events sent by the frame will be displayed in the top part. The top three have data sent by the iframe as well as "Last Fullscreen" and "Last Autoplay", the other ones have no data and are just the events and will turn green ones triggered from the iframe/game. 
+
+If they are green/have a green check box it is successful. If there is an orange checkbox, the event was sent, but something is wrong with the data.
 
 Sending auto play, volume, and refresh balance events to the iframe can be done by the controls in the middle.
 

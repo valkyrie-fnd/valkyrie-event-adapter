@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Full screen events
 - Game loading event
 - Open Home event
+- Not part of the library per se, but a test site is available in [./test-site](./test-site/) sub folder. Published using github pages on [https://valkyrie-fnd.github.io/valkyrie-event-adapter](https://valkyrie-fnd.github.io/valkyrie-event-adapter)
 
 ### Changed
 - gameLoaded now sends `status: "done"`
