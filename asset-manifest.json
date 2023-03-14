@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/valkyrie-event-adapter/static/css/main.86995b77.css",
+    "main.js": "/valkyrie-event-adapter/static/js/main.df4ec1d5.js",
+    "index.html": "/valkyrie-event-adapter/index.html",
+    "main.86995b77.css.map": "/valkyrie-event-adapter/static/css/main.86995b77.css.map",
+    "main.df4ec1d5.js.map": "/valkyrie-event-adapter/static/js/main.df4ec1d5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.86995b77.css",
+    "static/js/main.df4ec1d5.js"
+  ]
+}
