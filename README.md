@@ -2,7 +2,7 @@
 [![](https://img.shields.io/badge/License-MIT%20-brightgreen.svg)](./LICENSE.md) 
 [![](https://img.shields.io/github/actions/workflow/status/valkyrie-fnd/valkyrie-event-adapter/release-and-publish.yaml)](https://github.com/valkyrie-fnd/valkyrie-event-adapter/actions/workflows/release-and-publish.yaml)
 ![](https://img.shields.io/github/last-commit/valkyrie-fnd/valkyrie-event-adapter)
-[![](https://img.shields.io/website?url=https%3A%2F%2Fvalkyrie-fnd.github-io%2Fvalkyrie-event-adapter)](https://valkyrie.bet/docs)
+[![](https://img.shields.io/website?url=https%3A%2F%2Fvalkyrie-fnd.github.io%2Fvalkyrie-event-adapter)](https://valkyrie-fnd.github.io/valkyrie-event-adapter/)
 ![](https://img.shields.io/github/languages/top/valkyrie-fnd/valkyrie-event-adapter)
 ![](https://img.shields.io/tokei/lines/github/valkyrie-fnd/valkyrie-event-adapter)
 [![](https://img.shields.io/github/v/release/valkyrie-fnd/valkyrie-event-adapter)](https://github.com/valkyrie-fnd/valkyrie-event-adapter/releases)
