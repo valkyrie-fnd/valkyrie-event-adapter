@@ -24,7 +24,11 @@ or using yarn
 yarn add @valkyrie-fnd/valkyrie-event-adapter
 ```
 ## Provider 
-If your're a provider and want to follow Valkyrie events you use `ValkyrieWrapper`
+If your're a provider and want to follow Valkyrie events you use `ValkyrieWrapper`.
+
+In relevant places in your code you need to call `ValkyrieWrapper` to notify it of events that happen. Eg `vm.gameLoaded()` when the game's resources are finished loading.
+
+When implemented fully, you can make use of the test site (read below) to verify your events are being sent as expected. Read the [docs](./docs/classes/ValkyrieWrapper.md) what functions exist and verify using the test site.
 
 ``` typescript
 import { ValkyrieWrapper } from '@valkyrie-fnd/valkyrie-event-adapter';
@@ -42,7 +46,6 @@ vw.gameLoaded();
 // If you need to remove any event listeners
 unregister();
 ```
-
 `valkyrieReceiver` needs to implement the `ValkyrieReceiver` interface.
 ``` typescript
 export interface ValkyrieReceiver {
