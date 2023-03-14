@@ -1,6 +1,6 @@
 {
   "name": "@valkyrie-fnd/valkyrie-event-adapter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "description": "Used by provider to communicate with valkyrie enabled operator",
   "main": "./dist/cjs/index.js",
